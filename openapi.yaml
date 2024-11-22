@@ -3,8 +3,161 @@
 
 openapi: 3.0.3
 info:
-    title: ""
+    title: NewsService API
     version: 0.0.1
-paths: {}
+paths:
+    /v1/news:
+        get:
+            tags:
+                - NewsService
+            operationId: NewsService_GetNewsFeed
+            parameters:
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/news.v1.GetNewsFeedResponse'
+        post:
+            tags:
+                - NewsService
+            operationId: NewsService_CreateNews
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/news.v1.CreateNewsRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/news.v1.News'
+    /v1/news/{id}:
+        get:
+            tags:
+                - NewsService
+            operationId: NewsService_GetNewsById
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/news.v1.News'
+        put:
+            tags:
+                - NewsService
+            operationId: NewsService_UpdateNews
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/news.v1.UpdateNewsRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/news.v1.News'
+        delete:
+            tags:
+                - NewsService
+            operationId: NewsService_DeleteNews
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
 components:
-    schemas: {}
+    schemas:
+        news.v1.CreateNewsRequest:
+            type: object
+            properties:
+                title:
+                    type: string
+                body:
+                    type: string
+                shortBody:
+                    type: string
+                imageUrl:
+                    type: string
+        news.v1.GetNewsFeedResponse:
+            type: object
+            properties:
+                news:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/news.v1.ShortNews'
+                total:
+                    type: integer
+                    format: int32
+        news.v1.News:
+            type: object
+            properties:
+                id:
+                    type: string
+                title:
+                    type: string
+                body:
+                    type: string
+                imageUrl:
+                    type: string
+        news.v1.ShortNews:
+            type: object
+            properties:
+                id:
+                    type: string
+                title:
+                    type: string
+                shortBody:
+                    type: string
+                imageUrl:
+                    type: string
+        news.v1.UpdateNewsRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                title:
+                    type: string
+                body:
+                    type: string
+                shortBody:
+                    type: string
+                imageUrl:
+                    type: string
+tags:
+    - name: NewsService

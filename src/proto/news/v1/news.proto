@@ -3,7 +3,7 @@ syntax = "proto3";
 package news.v1;
 
 option go_package = "github.com/impit-mpit/api-proto/gen/go/news/v1;newsv1";
-import "google/protobuf/timestamp.proto";
+// import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
