@@ -1,8 +1,7 @@
-API_PROTO_FILES=$(shell find proto -name *.proto)
+API_PROTO_FILES=$(shell find src/proto -name *.proto)
 .PHONY: generate
 generate:
-	protoc --proto_path=./third_party \
-		   --proto_path=./proto \
+	protoc --proto_path=./src \
  	       --go_out=paths=source_relative:./gen/go \
  	       --go-http_out=paths=source_relative:./gen/go \
  	       --go-grpc_out=paths=source_relative:./gen/go \
