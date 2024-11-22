@@ -4,28 +4,51 @@ package news.v1;
 
 option go_package = "github.com/impit-mpit/api-proto/gen/go/news/v1;newsv1";
 import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
 
 service NewsService {
-  rpc GetNewsFeed(GetNewsFeedRequest) returns (GetNewsFeedResponse) {
-  }
-  rpc GetNewsById(GetNewsByIdRequest) returns (News) {
-  }
   rpc CreateNews(CreateNewsRequest) returns (News) {
+    option (google.api.http) = {
+      post: "/v1/news"
+      body: "*"
+    };
   }
-  rpc DeleteNews(DeleteNewsRequest) returns (OperationResponse) {
+  rpc DeleteNews(DeleteNewsRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/news/{id}"
+    };
   }
   rpc UpdateNews(UpdateNewsRequest) returns (News) {
+    option (google.api.http) = {
+      put: "/v1/news/{id}"
+      body: "*"
+    };
+  }
+  rpc GetNewsFeed(GetNewsFeedRequest) returns (GetNewsFeedResponse) {
+    option (google.api.http) = {
+      get: "/v1/news"
+    };
+  }
+  rpc GetNewsById(GetNewsByIdRequest) returns (News) {
+    option (google.api.http) = {
+      get: "/v1/news/{id}"
+    };
   }
 }
 
 message News {
-  string id = 1;
+  int64 id = 1;
   string title = 2;
-  string content = 3;
+  string body = 3;
   string image_url = 4;
-  string user_id = 5;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
+}
+
+message ShortNews {
+  int64 id = 1;
+  string title = 2;
+  string short_body = 3;
+  string image_url = 4;
 }
 
 message GetNewsFeedRequest {
@@ -34,10 +57,8 @@ message GetNewsFeedRequest {
 }
 
 message GetNewsFeedResponse {
-  repeated News news = 1;
-  int32 total_pages = 2;
-  int32 current_page = 3;
-  int32 total_items = 4;
+  repeated ShortNews news = 1;
+  int32 total = 2;
 }
 
 message GetNewsByIdRequest {
@@ -45,26 +66,20 @@ message GetNewsByIdRequest {
 }
 
 message CreateNewsRequest {
-  string token = 1;
-  string title = 2;
-  string content = 3;
+  string title = 1;
+  string body = 2;
+  string shortBody = 3;
   string image_url = 4;
 }
 
 message DeleteNewsRequest {
-  string token = 1;
-  string id = 2;
+  string id = 1;
 }
 
 message UpdateNewsRequest {
-  string token = 1;
-  string id = 2;
-  optional string title = 3;
-  optional string content = 4;
+  string id = 1;
+  optional string title = 2;
+  optional string body = 3;
+  optional string shortBody = 4;
   optional string image_url = 5;
-}
-
-message OperationResponse {
-  bool success = 1;
-  string message = 2;
 }
