@@ -8,7 +8,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
 service NewsService {
-  rpc CreateNews(CreateNewsRequest) returns (News) {
+  rpc CreateNews(CreateNewsRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "/v1/news"
       body: "*"
@@ -19,7 +19,7 @@ service NewsService {
       delete: "/v1/news/{id}"
     };
   }
-  rpc UpdateNews(UpdateNewsRequest) returns (News) {
+  rpc UpdateNews(UpdateNewsRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       put: "/v1/news/{id}"
       body: "*"
