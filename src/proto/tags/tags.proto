@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package tags.v1;
+
+option go_package = "github.com/impit-mpit/api-proto/gen/go/tags/v1;tagsv1";
+// import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+service TagsService {
+  rpc CreateTags(CreateTagsRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/tags"
+      body: "*"
+    };
+  }
+  rpc DeleteTags(DeleteTagsRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/tags/{id}"
+    };
+  }
+  rpc UpdateTags(UpdateTagsRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/tags/{id}"
+      body: "*"
+    };
+  }
+  rpc GetTagsFeed(GetTagsFeedRequest) returns (GetTagsFeedResponse) {
+    option (google.api.http) = {
+      get: "/v1/tags"
+    };
+  }
+  rpc GetTagsById(GetTagsByIdRequest) returns (Tags) {
+    option (google.api.http) = {
+      get: "/v1/tags/{id}"
+    };
+  }
+}
+
+message Tags {
+  int64 id = 1;
+  string name = 2;
+}
+
+
+message GetTagsFeedRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+message GetTagsFeedResponse {
+  repeated Tags tags = 1;
+  int32 total = 2;
+}
+
+message GetTagsByIdRequest {
+  int64 id = 1;
+}
+
+message CreateTagsRequest {
+  string name = 1;
+}
+
+message DeleteTagsRequest {
+  int64 id = 1;
+}
+
+message UpdateTagsRequest {
+  int64 id = 1;
+  optional string name = 2;
+}
