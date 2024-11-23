@@ -450,6 +450,10 @@ components:
                     type: string
                 name:
                     type: string
+                tag:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/category.v1.Tag'
         category.v1.CreateCategoryRequest:
             type: object
             properties:
@@ -465,6 +469,13 @@ components:
                 total:
                     type: integer
                     format: int32
+        category.v1.Tag:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
         category.v1.UpdateCategoryRequest:
             type: object
             properties:

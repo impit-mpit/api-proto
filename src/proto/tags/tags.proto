@@ -35,6 +35,19 @@ service TagsService {
       get: "/v1/tags/{id}"
     };
   }
+  rpc GetTagsByCategory(GetTagsByCategoryRequest) returns (GetTagsByCategoryResponse) {
+    option (google.api.http) = {
+      get: "/v1/tags/category/{id}"
+    };
+  }
+}
+
+message GetTagsByCategoryRequest {
+  int64 id = 1;
+}
+
+message GetTagsByCategoryResponse {
+  repeated Tags tags = 1;
 }
 
 message Tags {

@@ -40,8 +40,13 @@ service CategoryService {
 message Category {
   int64 id = 1;
   string name = 2;
+  repeated Tag tag = 3;
 }
 
+message Tag {
+  int64 id = 1;
+  string name = 2;
+}
 
 message GetCategoryFeedRequest {
   int32 page = 1;
