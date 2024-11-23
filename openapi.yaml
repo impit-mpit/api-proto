@@ -203,7 +203,7 @@ components:
                 media:
                     type: array
                     items:
-                        $ref: '#/components/schemas/media.v1.Media'
+                        $ref: '#/components/schemas/media.v1.ShortMedia'
                 total:
                     type: integer
                     format: int32
@@ -215,6 +215,19 @@ components:
                 title:
                     type: string
                 description:
+                    type: string
+                videoUrl:
+                    type: string
+                thumbnailUrl:
+                    type: string
+        media.v1.ShortMedia:
+            type: object
+            properties:
+                id:
+                    type: string
+                title:
+                    type: string
+                shortDescription:
                     type: string
                 videoUrl:
                     type: string
