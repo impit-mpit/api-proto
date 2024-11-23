@@ -42,10 +42,7 @@ paths:
             responses:
                 "200":
                     description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/news.v1.News'
+                    content: {}
     /v1/news/{id}:
         get:
             tags:
@@ -83,10 +80,7 @@ paths:
             responses:
                 "200":
                     description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/news.v1.News'
+                    content: {}
         delete:
             tags:
                 - NewsService
