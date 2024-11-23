@@ -113,6 +113,24 @@ paths:
                 "200":
                     description: OK
                     content: {}
+    /v1/login:
+        post:
+            tags:
+                - AuthService
+            operationId: AuthService_Login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/auth.v1.LoginRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/auth.v1.LoginResponse'
     /v1/media:
         get:
             tags:
@@ -392,6 +410,18 @@ components:
             properties:
                 message:
                     type: string
+        auth.v1.LoginRequest:
+            type: object
+            properties:
+                username:
+                    type: string
+                password:
+                    type: string
+        auth.v1.LoginResponse:
+            type: object
+            properties:
+                token:
+                    type: string
         category.v1.Category:
             type: object
             properties:
@@ -568,6 +598,7 @@ components:
                     type: string
 tags:
     - name: AIService
+    - name: AuthService
     - name: CategoryService
     - name: MediaService
     - name: NewsService
