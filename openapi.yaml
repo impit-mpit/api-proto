@@ -3,9 +3,98 @@
 
 openapi: 3.0.3
 info:
-    title: NewsService API
+    title: ""
     version: 0.0.1
 paths:
+    /v1/media:
+        get:
+            tags:
+                - MediaService
+            operationId: MediaService_GetMediaFeed
+            parameters:
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/media.v1.GetMediaFeedResponse'
+        post:
+            tags:
+                - MediaService
+            operationId: MediaService_CreateMedia
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/media.v1.CreateMediaRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/media/{id}:
+        get:
+            tags:
+                - MediaService
+            operationId: MediaService_GetMediaById
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/media.v1.Media'
+        put:
+            tags:
+                - MediaService
+            operationId: MediaService_UpdateMedia
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/media.v1.UpdateMediaRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+        delete:
+            tags:
+                - MediaService
+            operationId: MediaService_DeleteMedia
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
     /v1/news:
         get:
             tags:
@@ -97,6 +186,53 @@ paths:
                     content: {}
 components:
     schemas:
+        media.v1.CreateMediaRequest:
+            type: object
+            properties:
+                title:
+                    type: string
+                videoUrl:
+                    type: string
+                thumbnailUrl:
+                    type: string
+                description:
+                    type: string
+        media.v1.GetMediaFeedResponse:
+            type: object
+            properties:
+                Media:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/media.v1.Media'
+                total:
+                    type: integer
+                    format: int32
+        media.v1.Media:
+            type: object
+            properties:
+                id:
+                    type: string
+                title:
+                    type: string
+                description:
+                    type: string
+                videoUrl:
+                    type: string
+                thumbnailUrl:
+                    type: string
+        media.v1.UpdateMediaRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                title:
+                    type: string
+                videoUrl:
+                    type: string
+                thumbnailUrl:
+                    type: string
+                description:
+                    type: string
         news.v1.CreateNewsRequest:
             type: object
             properties:
@@ -154,4 +290,5 @@ components:
                 imageUrl:
                     type: string
 tags:
+    - name: MediaService
     - name: NewsService

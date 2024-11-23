@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package media.v1;
+
+option go_package = "github.com/impit-mpit/api-proto/gen/go/media/v1;mediav1";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+service MediaService {
+  rpc CreateMedia(CreateMediaRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/media"
+      body: "*"
+    };
+  }
+  rpc DeleteMedia(DeleteMediaRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/media/{id}"
+    };
+  }
+  rpc UpdateMedia(UpdateMediaRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/media/{id}"
+      body: "*"
+    };
+  }
+  rpc GetMediaFeed(GetMediaFeedRequest) returns (GetMediaFeedResponse) {
+    option (google.api.http) = {
+      get: "/v1/media"
+    };
+  }
+  rpc GetMediaById(GetMediaByIdRequest) returns (Media) {
+    option (google.api.http) = {
+      get: "/v1/media/{id}"
+    };
+  }
+}
+
+message Media {
+  int64 id = 1;
+  string title = 2;
+  string description = 3;
+  string video_url = 4;
+  string thumbnail_url = 5;
+}
+
+message GetMediaFeedRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+message GetMediaFeedResponse {
+  repeated Media Media = 1;
+  int32 total = 2;
+}
+
+message GetMediaByIdRequest {
+  int64 id = 1;
+}
+
+message CreateMediaRequest {
+  string title = 1;
+  string video_url = 2;
+  string thumbnail_url = 3;
+  string description = 4;
+}
+
+message DeleteMediaRequest {
+  int64 id = 1;
+}
+
+message UpdateMediaRequest {
+  int64 id = 1;
+  optional string title = 2;
+  optional string video_url = 3;
+  optional string thumbnail_url = 4;
+  optional string description = 5;
+}
