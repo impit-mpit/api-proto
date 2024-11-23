@@ -6,4 +6,4 @@ resources:
 - ingress.yaml
 images:
 - name: ghcr.io/impit-mpit/api-swagger-master
-  newTag: 918177c
+  newTag: fa24d5d
