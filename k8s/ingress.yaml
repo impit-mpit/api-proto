@@ -1,19 +1,19 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
 metadata:
-  name: swagger-ui-ingress
-  annotations:
-    # nginx.ingress.kubernetes.io/rewrite-target: /
-    kubernetes.io/ingress.class: nginx
+  name: swagger-ui-vs
+  namespace: nmost
 spec:
-  rules:
-  - host: nmost.site
-    http:
-      paths:
-      - path: /swagger
-        pathType: Prefix
-        backend:
-          service:
-            name: swagger-ui-service
-            port:
-              number: 80
+  hosts:
+  - "nmost.site"
+  gateways:
+  - grpc-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /swagger
+    route:
+    - destination:
+        host: swagger-ui-service
+        port:
+          number: 80
