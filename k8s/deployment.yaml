@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swagger-ui
+  labels:
+    app: swagger-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: swagger-ui
+  template:
+    metadata:
+      labels:
+        app: swagger-ui
+    spec:
+      containers:
+      - name: swagger-ui
+        image: ghcr.io/impit-mpit/api-swagger-master:latest
+        env:
+          - name: BASE_URL
+            value: /swagger
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
