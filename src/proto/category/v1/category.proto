@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package category.v1;
+
+option go_package = "github.com/impit-mpit/api-proto/gen/go/category/v1;categoryv1";
+// import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+service CategoryService {
+  rpc CreateCategory(CreateCategoryRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/category"
+      body: "*"
+    };
+  }
+  rpc DeleteCategory(DeleteCategoryRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/category/{id}"
+    };
+  }
+  rpc UpdateCategory(UpdateCategoryRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/category/{id}"
+      body: "*"
+    };
+  }
+  rpc GetCategoryFeed(GetCategoryFeedRequest) returns (GetCategoryFeedResponse) {
+    option (google.api.http) = {
+      get: "/v1/category"
+    };
+  }
+  rpc GetCategoryById(GetCategoryByIdRequest) returns (Category) {
+    option (google.api.http) = {
+      get: "/v1/category/{id}"
+    };
+  }
+}
+
+message Category {
+  int64 id = 1;
+  string name = 2;
+}
+
+
+message GetCategoryFeedRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+message GetCategoryFeedResponse {
+  repeated Category category = 1;
+  int32 total = 2;
+}
+
+message GetCategoryByIdRequest {
+  int64 id = 1;
+}
+
+message CreateCategoryRequest {
+  string name = 1;
+}
+
+message DeleteCategoryRequest {
+  int64 id = 1;
+}
+
+message UpdateCategoryRequest {
+  int64 id = 1;
+  optional string name = 2;
+}

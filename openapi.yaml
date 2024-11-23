@@ -24,6 +24,95 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ai.v1.ChatResponse'
+    /v1/category:
+        get:
+            tags:
+                - CategoryService
+            operationId: CategoryService_GetCategoryFeed
+            parameters:
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/category.v1.GetCategoryFeedResponse'
+        post:
+            tags:
+                - CategoryService
+            operationId: CategoryService_CreateCategory
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/category.v1.CreateCategoryRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/category/{id}:
+        get:
+            tags:
+                - CategoryService
+            operationId: CategoryService_GetCategoryById
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/category.v1.Category'
+        put:
+            tags:
+                - CategoryService
+            operationId: CategoryService_UpdateCategory
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/category.v1.UpdateCategoryRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+        delete:
+            tags:
+                - CategoryService
+            operationId: CategoryService_DeleteCategory
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
     /v1/media:
         get:
             tags:
@@ -303,6 +392,35 @@ components:
             properties:
                 message:
                     type: string
+        category.v1.Category:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+        category.v1.CreateCategoryRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+        category.v1.GetCategoryFeedResponse:
+            type: object
+            properties:
+                category:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/category.v1.Category'
+                total:
+                    type: integer
+                    format: int32
+        category.v1.UpdateCategoryRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
         media.v1.CreateMediaRequest:
             type: object
             properties:
@@ -450,6 +568,7 @@ components:
                     type: string
 tags:
     - name: AIService
+    - name: CategoryService
     - name: MediaService
     - name: NewsService
     - name: TagsService
