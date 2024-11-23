@@ -3,7 +3,7 @@ syntax = "proto3";
 package auth.v1;
 
 option go_package = "github.com/impit-mpit/api-proto/gen/go/auth/v1;authv1";
-// import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
 
 service AuthService {
@@ -13,6 +13,16 @@ service AuthService {
       body: "*"
     };
   }
+  rpc Token(google.protobuf.Empty) returns (TokenResponse) {
+    option (google.api.http) = {
+      post: "/v1/token"
+      body: "*"
+    };
+  }
+}
+
+message TokenResponse {
+    string username = 1;
 }
 
 message LoginRequest {

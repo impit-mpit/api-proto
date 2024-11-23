@@ -398,6 +398,22 @@ paths:
                 "200":
                     description: OK
                     content: {}
+    /v1/token:
+        post:
+            tags:
+                - AuthService
+            operationId: AuthService_Token
+            requestBody:
+                content:
+                    application/json: {}
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/auth.v1.TokenResponse'
 components:
     schemas:
         ai.v1.ChatResponse:
@@ -421,6 +437,11 @@ components:
             type: object
             properties:
                 token:
+                    type: string
+        auth.v1.TokenResponse:
+            type: object
+            properties:
+                username:
                     type: string
         category.v1.Category:
             type: object
