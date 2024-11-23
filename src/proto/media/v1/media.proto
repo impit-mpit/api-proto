@@ -50,7 +50,7 @@ message GetMediaFeedRequest {
 }
 
 message GetMediaFeedResponse {
-  repeated Media Media = 1;
+  repeated Media media = 1;
   int32 total = 2;
 }
 

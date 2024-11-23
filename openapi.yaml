@@ -200,7 +200,7 @@ components:
         media.v1.GetMediaFeedResponse:
             type: object
             properties:
-                Media:
+                media:
                     type: array
                     items:
                         $ref: '#/components/schemas/media.v1.Media'
