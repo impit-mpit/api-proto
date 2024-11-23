@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package ai.v1;
+
+option go_package = "github.com/impit-mpit/api-proto/gen/go/ai/v1;aiv1";
+import "google/api/annotations.proto";
+
+service AIService {
+  rpc Chat(CreateChatRequest) returns (stream ChatResponse) {
+    option (google.api.http) = {
+      post: "/v1/ai/chat"
+      body: "*"
+    };
+  }
+}
+
+message CreateChatRequest {
+    string message = 1;
+}
+
+message ChatResponse {
+    string message = 1;
+}

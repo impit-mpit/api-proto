@@ -6,6 +6,24 @@ info:
     title: ""
     version: 0.0.1
 paths:
+    /v1/ai/chat:
+        post:
+            tags:
+                - AIService
+            operationId: AIService_Chat
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ai.v1.CreateChatRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ai.v1.ChatResponse'
     /v1/media:
         get:
             tags:
@@ -186,6 +204,16 @@ paths:
                     content: {}
 components:
     schemas:
+        ai.v1.ChatResponse:
+            type: object
+            properties:
+                message:
+                    type: string
+        ai.v1.CreateChatRequest:
+            type: object
+            properties:
+                message:
+                    type: string
         media.v1.CreateMediaRequest:
             type: object
             properties:
@@ -303,5 +331,6 @@ components:
                 imageUrl:
                     type: string
 tags:
+    - name: AIService
     - name: MediaService
     - name: NewsService

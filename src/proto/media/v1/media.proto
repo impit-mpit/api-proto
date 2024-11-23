@@ -52,7 +52,6 @@ message ShortMedia {
   string thumbnail_url = 5;
 }
 
-
 message GetMediaFeedRequest {
   int32 page = 1;
   int32 page_size = 2;
