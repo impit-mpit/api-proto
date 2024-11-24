@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package specialist.v1;
+
+option go_package = "github.com/impit-mpit/api-proto/gen/go/specialist/v1;specialistv1";
+// import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+service SpecialistService {
+  rpc CreateSpecialist(CreateSpecialistRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/specialist"
+      body: "*"
+    };
+  }
+  rpc DeleteSpecialist(DeleteSpecialistRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/specialist/{id}"
+    };
+  }
+  rpc UpdateSpecialist(UpdateSpecialistRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/specialist/{id}"
+      body: "*"
+    };
+  }
+  rpc GetSpecialistFeed(GetSpecialistFeedRequest) returns (GetSpecialistFeedResponse) {
+    option (google.api.http) = {
+      get: "/v1/specialist"
+    };
+  }
+  rpc GetSpecialistById(GetSpecialistByIdRequest) returns (Specialist) {
+    option (google.api.http) = {
+      get: "/v1/specialist/{id}"
+    };
+  }
+}
+
+message Specialist {
+  int64 id = 1;
+  string name = 2;
+  string fio = 3;
+  string description = 4;
+}
+
+
+message GetSpecialistFeedRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+message GetSpecialistFeedResponse {
+  repeated Specialist Specialist = 1;
+  int32 total = 2;
+}
+
+message GetSpecialistByIdRequest {
+  int64 id = 1;
+}
+
+message CreateSpecialistRequest {
+  string name = 1;
+  string fio = 2;
+  string description = 3;
+}
+
+message DeleteSpecialistRequest {
+  int64 id = 1;
+}
+
+message UpdateSpecialistRequest {
+  int64 id = 1;
+  optional string name = 2;
+  optional string fio = 3;
+  optional string description = 4;
+}

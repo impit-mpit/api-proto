@@ -309,6 +309,95 @@ paths:
                 "200":
                     description: OK
                     content: {}
+    /v1/specialist:
+        get:
+            tags:
+                - SpecialistService
+            operationId: SpecialistService_GetSpecialistFeed
+            parameters:
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/specialist.v1.GetSpecialistFeedResponse'
+        post:
+            tags:
+                - SpecialistService
+            operationId: SpecialistService_CreateSpecialist
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/specialist.v1.CreateSpecialistRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/specialist/{id}:
+        get:
+            tags:
+                - SpecialistService
+            operationId: SpecialistService_GetSpecialistById
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/specialist.v1.Specialist'
+        put:
+            tags:
+                - SpecialistService
+            operationId: SpecialistService_UpdateSpecialist
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/specialist.v1.UpdateSpecialistRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+        delete:
+            tags:
+                - SpecialistService
+            operationId: SpecialistService_DeleteSpecialist
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
     /v1/tags:
         get:
             tags:
@@ -346,6 +435,24 @@ paths:
                 "200":
                     description: OK
                     content: {}
+    /v1/tags/category/{id}:
+        get:
+            tags:
+                - TagsService
+            operationId: TagsService_GetTagsByCategory
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/tags.v1.GetTagsByCategoryResponse'
     /v1/tags/{id}:
         get:
             tags:
@@ -599,11 +706,59 @@ components:
                     type: string
                 imageUrl:
                     type: string
+        specialist.v1.CreateSpecialistRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                fio:
+                    type: string
+                description:
+                    type: string
+        specialist.v1.GetSpecialistFeedResponse:
+            type: object
+            properties:
+                Specialist:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/specialist.v1.Specialist'
+                total:
+                    type: integer
+                    format: int32
+        specialist.v1.Specialist:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                fio:
+                    type: string
+                description:
+                    type: string
+        specialist.v1.UpdateSpecialistRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                fio:
+                    type: string
+                description:
+                    type: string
         tags.v1.CreateTagsRequest:
             type: object
             properties:
                 name:
                     type: string
+        tags.v1.GetTagsByCategoryResponse:
+            type: object
+            properties:
+                tags:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/tags.v1.Tags'
         tags.v1.GetTagsFeedResponse:
             type: object
             properties:
@@ -634,4 +789,5 @@ tags:
     - name: CategoryService
     - name: MediaService
     - name: NewsService
+    - name: SpecialistService
     - name: TagsService
